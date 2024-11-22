@@ -1,0 +1,100 @@
+/* General window styles */
+QWidget {
+    background-color: #2C3E50;  /* Primary: Dark Grey */
+    color: #ECF0F1;            /* Neutral: Very Light Grey */
+}
+
+/* Logo label style */
+QLabel#logoLabel {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ECF0F1;  /* Neutral */
+    text-align: center;
+}
+
+/* Welcome label style */
+QLabel#welcomeLabel {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ECF0F1;  /* Neutral */
+    text-align: center;
+}
+
+/* Error label style */
+QLabel#errorLabel {
+    color: #C0392B;  /* Error: Scarlet */
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #3498DB;  /* Accent: Electric Blue */
+    color: #ECF0F1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+QPushButton:hover {
+    background-color: #5DADE2;  /* Lighter Electric Blue */
+}
+
+QPushButton:pressed {
+    background-color: #2980B9;  /* Darker Electric Blue */
+}
+
+/* Checkboxes */
+QCheckBox {
+    color: #ECF0F1;  /* Neutral */
+}
+
+/* Input fields */
+QLineEdit {
+    background-color: #34495E;  /* Slightly lighter grey */
+    color: #ECF0F1;             /* Neutral */
+    border: 1px solid #5DADE2;  /* Accent */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Error Label */
+QLabel#errorLabel {
+    color: #C0392B; /* Scarlet */
+}
+
+/* Username Input */
+QLineEdit#usernameInput {
+    background-color: #34495E; /* Slightly lighter grey */
+    color: #ECF0F1; /* Neutral */
+    border: 1px solid #3498DB; /* Accent */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Password Input */
+QLineEdit#passwordInput {
+    background-color: #34495E; /* Slightly lighter grey */
+    color: #ECF0F1; /* Neutral */
+    border: 1px solid #3498DB; /* Accent */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Show Checkbox */
+QCheckBox#showUsernameCheckbox,
+QCheckBox#showPasswordCheckbox {
+    color: #ECF0F1; /* Neutral */
+}
+
+/* Forgot Password Button */
+QPushButton#forgotPasswordButton {
+    color: #ECF0F1;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+QPushButton#forgotPasswordButton:hover {
+    color: #3498DB; /* Accent */
+}

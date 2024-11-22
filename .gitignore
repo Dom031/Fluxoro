@@ -1,0 +1,25 @@
+# Ignore system files and temporary files
+__pycache__/
+*.pyc
+*.log
+
+# Ignore IDE and editor files
+.vscode/
+*.code-workspace
+
+# Ignore documents (will add later)
+Documents/
+
+# Ignore text notes  and drawio files
+*.txt
+*.drawio
+
+# Ignore backup or temporary files
+Backups/
+
+# Ignore temporary OS files
+.DS_Store
+Thumbs.db
+
+# Ignore all other text-based design notes
+Design/*.txt
