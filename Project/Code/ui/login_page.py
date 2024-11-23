@@ -1,11 +1,18 @@
 from PyQt5.QtWidgets import (
     QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QCheckBox
 )
-from PyQt5.QtCore import pyqtSignal, QTimer, Qt
+from PyQt5.QtCore import (
+    pyqtSignal, QTimer, Qt
+)
+
+user_credentials = {
+        "admin": {"password": "1234", "role": "manager"},
+        "user":  {"password": "1234", "role": "user"}, 
+    }
 
 
 class LoginPage(QWidget):
-    login_successful = pyqtSignal()  # Signal to notify successful login
+    login_successful = pyqtSignal(str)   # Signal to notify successful login
 
     def __init__(self):
         super().__init__()
@@ -94,18 +101,19 @@ class LoginPage(QWidget):
         else:
             self.password_input.setEchoMode(QLineEdit.Password)
 
+
     def handle_login(self):
         """Handle login logic."""
         username = self.username_input.text()
         password = self.password_input.text()
 
-        # Placeholder validation (replace with database connection)
-        if username == "admin" and password == "1234":
+    # Placeholder for validation with roles
+        if username in user_credentials and user_credentials[username]["password"] == password:
             self.error_label.setText("")
-            self.login_successful.emit()
+            role = user_credentials[username]["role"]  # Get the user's role
+            self.login_successful.emit(role)  # Pass the role in the signal
         else:
             self.error_label.setText("Invalid username or password!")
-            QTimer.singleShot(3000, lambda: self.error_label.setText(""))
             self.forgot_password_button.setVisible(True)
 
     def handle_forgot_password(self):

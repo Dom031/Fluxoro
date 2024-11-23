@@ -69,13 +69,17 @@ QLabel#welcomeLabel {
 QLabel#salesLabel {
     font-size: 18px;
     font-weight: regular;
-    color: #2C3E50; /* Primary */
+    color: white; /* Primary */
     text-align: center;
 }
 
 /* Buttons for Both Pages */
 QPushButton#viewReportsButton,
 QPushButton#manageFieldsButton,
+QPushButton#homeButton,
+QPushButton#addSalesButton,
+QPushButton#settingsButton,
+QPushButton#helpButton,
 QPushButton#logoutButton,
 QPushButton#loginButton {
     background-color: #3498DB; /* Accent */
@@ -90,6 +94,10 @@ QPushButton#loginButton {
 /* Hover and Pressed States for Buttons */
 QPushButton#viewReportsButton:hover,
 QPushButton#manageFieldsButton:hover,
+QPushButton#homeButton:hover,
+QPushButton#addSalesButton:hover,
+QPushButton#settingsButton:hover,
+QPushButton#helpButton:hover,
 QPushButton#logoutButton:hover,
 QPushButton#loginButton:hover {
     background-color: #5DADE2; /* Lighter Accent */
@@ -97,6 +105,10 @@ QPushButton#loginButton:hover {
 
 QPushButton#viewReportsButton:pressed,
 QPushButton#manageFieldsButton:pressed,
+QPushButton#homeButton:pressed,
+QPushButton#addSalesButton:pressed,
+QPushButton#settingsButton:pressed,
+QPushButton#helpButton:pressed,
 QPushButton#logoutButton:pressed,
 QPushButton#loginButton:pressed {
     background-color: #2980B9; /* Darker Accent */
