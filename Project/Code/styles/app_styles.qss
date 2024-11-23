@@ -1,10 +1,12 @@
-/* General window styles */
+/* General Styles */
 QWidget {
     background-color: #2C3E50;  /* Primary: Dark Grey */
     color: #ECF0F1;            /* Neutral: Very Light Grey */
 }
 
-/* Logo label style */
+/* Login Page Styles */
+
+/* Logo Label */
 QLabel#logoLabel {
     font-size: 24px;
     font-weight: bold;
@@ -12,67 +14,21 @@ QLabel#logoLabel {
     text-align: center;
 }
 
-/* Welcome label style */
+/* Welcome Label for Login Page */
 QLabel#welcomeLabel {
     font-size: 18px;
     font-weight: bold;
-    color: #ECF0F1;  /* Neutral */
+    color: #3498DB; /* Accent */
     text-align: center;
-}
-
-/* Error label style */
-QLabel#errorLabel {
-    color: #C0392B;  /* Error: Scarlet */
-}
-
-/* Buttons */
-QPushButton {
-    background-color: #3498DB;  /* Accent: Electric Blue */
-    color: #ECF0F1;
-    border: none;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-QPushButton:hover {
-    background-color: #5DADE2;  /* Lighter Electric Blue */
-}
-
-QPushButton:pressed {
-    background-color: #2980B9;  /* Darker Electric Blue */
-}
-
-/* Checkboxes */
-QCheckBox {
-    color: #ECF0F1;  /* Neutral */
-}
-
-/* Input fields */
-QLineEdit {
-    background-color: #34495E;  /* Slightly lighter grey */
-    color: #ECF0F1;             /* Neutral */
-    border: 1px solid #5DADE2;  /* Accent */
-    border-radius: 5px;
-    padding: 5px;
 }
 
 /* Error Label */
 QLabel#errorLabel {
-    color: #C0392B; /* Scarlet */
+    color: #C0392B; /* Error: Scarlet */
 }
 
-/* Username Input */
-QLineEdit#usernameInput {
-    background-color: #34495E; /* Slightly lighter grey */
-    color: #ECF0F1; /* Neutral */
-    border: 1px solid #3498DB; /* Accent */
-    border-radius: 5px;
-    padding: 5px;
-}
-
-/* Password Input */
+/* Input Fields */
+QLineEdit#usernameInput,
 QLineEdit#passwordInput {
     background-color: #34495E; /* Slightly lighter grey */
     color: #ECF0F1; /* Neutral */
@@ -89,7 +45,7 @@ QCheckBox#showPasswordCheckbox {
 
 /* Forgot Password Button */
 QPushButton#forgotPasswordButton {
-    color: #ECF0F1;
+    color: #ECF0F1; /* Neutral */
     background-color: transparent;
     border: none;
     text-decoration: underline;
@@ -97,4 +53,51 @@ QPushButton#forgotPasswordButton {
 
 QPushButton#forgotPasswordButton:hover {
     color: #3498DB; /* Accent */
+}
+
+/* User Dashboard Styles */
+
+/* Welcome Label */
+QLabel#welcomeLabel {
+    font-size: 22px;
+    font-weight: bold;
+    color: #3498DB; /* Accent */
+    text-align: center;
+}
+
+/* Sales Overview */
+QLabel#salesLabel {
+    font-size: 18px;
+    font-weight: regular;
+    color: #2C3E50; /* Primary */
+    text-align: center;
+}
+
+/* Buttons for Both Pages */
+QPushButton#viewReportsButton,
+QPushButton#manageFieldsButton,
+QPushButton#logoutButton,
+QPushButton#loginButton {
+    background-color: #3498DB; /* Accent */
+    color: #ECF0F1;           /* Neutral */
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Hover and Pressed States for Buttons */
+QPushButton#viewReportsButton:hover,
+QPushButton#manageFieldsButton:hover,
+QPushButton#logoutButton:hover,
+QPushButton#loginButton:hover {
+    background-color: #5DADE2; /* Lighter Accent */
+}
+
+QPushButton#viewReportsButton:pressed,
+QPushButton#manageFieldsButton:pressed,
+QPushButton#logoutButton:pressed,
+QPushButton#loginButton:pressed {
+    background-color: #2980B9; /* Darker Accent */
 }
