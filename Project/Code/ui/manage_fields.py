@@ -14,6 +14,8 @@ class ManageFieldsPage(QWidget):
         self.setWindowTitle("Manage Fields")
         self.setGeometry(100, 100, 800, 600)
         self.init_ui()
+        self.role = None
+        self.name = None
 
     def init_ui(self):
         # Welcome Message
@@ -99,6 +101,7 @@ class ManageFieldsPage(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.welcome_label)
         main_layout.addLayout(button_layout)
+
         main_layout.addLayout(sales_layout)
         main_layout.addWidget(scroll_area)  # Add table inside a scroll area
         main_layout.addLayout(add_field_layout)  # Add new field section
@@ -126,11 +129,15 @@ class ManageFieldsPage(QWidget):
             
     def handle_home(self):
         """Emit a signal to return to the Home page."""
-        self.home_signal.emit("manager")  # Emit manager role signal
+        self.home_signal.emit(self.role, self.name)  # Emit role and name signal
 
     def handle_manage_fields(self):
         """Handle navigation to the Manage Fields page."""
         self.manage_fields_signal.emit()
+    
+    def set_user_details(self, role, name):
+        self.role = role
+        self.name = name
 
     def handle_reports(self):
         """Placeholder for reports navigation."""

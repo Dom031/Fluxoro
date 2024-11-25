@@ -30,6 +30,7 @@ class MainApp:
         self.user_dashboard.home_signal.connect(self.show_dashboard)
         self.manager_dashboard.logout_signal.connect(self.show_login_page)
         self.manager_dashboard.manage_fields_signal.connect(self.show_manage_fields)
+        self.manage_fields_page.set_user_details(self.role, self.name)
 
         # Add navigation back from Manage Fields to Manager Dashboard
         self.manage_fields_page.home_signal.connect(self.show_dashboard)
@@ -73,13 +74,11 @@ class MainApp:
             self.login_page.error_label.setText("Invalid username or password")
 
 
-    def show_dashboard(self, role, name):
+    def show_dashboard(self, role=None, name=None):
         """Switch to the appropriate dashboard screen based on role."""
         #stored name and role from handle_login
         role = role or self.role
         name = name or self.name
-        print(f"Navigating to dashboard with role: {role}, name: {name}")  # Debug line
-
         # Close all pages
         self.login_page.close()
         self.manager_dashboard.close()
