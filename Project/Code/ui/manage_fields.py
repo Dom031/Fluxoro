@@ -1,17 +1,18 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QComboBox, QScrollArea
 from PyQt5.QtCore import Qt, pyqtSignal
 
-class ManagerDashboard(QWidget):
-    
+class ManageFieldsPage(QWidget):
+
     logout_signal = pyqtSignal()  # Signal for logout
     home_signal = pyqtSignal(str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
 
-
+    
+    
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Manager Dashboard")
-        self.setGeometry(100, 100, 600, 400)
+        self.setWindowTitle("Manage Fields")
+        self.setGeometry(100, 100, 800, 600)
         self.init_ui()
 
     def init_ui(self):
@@ -52,9 +53,33 @@ class ManagerDashboard(QWidget):
 
         self.logout_button = QPushButton("Log Out")
         self.logout_button.setObjectName("logoutButton")
-        self.logout_button.clicked.connect(self.handle_logout)   
+        self.logout_button.clicked.connect(self.handle_logout)    
+ 
         
+        # --- Manage Fields Section ---
         
+        # Table for displaying fields
+        self.fields_table = QTableWidget()
+        self.fields_table.setColumnCount(4)  # Field Name, Field Type, Options, Date Created
+        self.fields_table.setHorizontalHeaderLabels(["Field Name", "Field Type", "Options", "Date Created"])
+        self.fields_table.setObjectName("fieldsTable")
+        
+        # Add New Field Section
+        self.field_type_dropdown = QComboBox()
+        self.field_type_dropdown.addItems(["Product", "Service"])
+        self.add_field_button = QPushButton("Add New Field")
+        self.add_field_button.setObjectName("addFieldButton")
+
+
+        add_field_layout = QHBoxLayout()
+        add_field_layout.addWidget(self.field_type_dropdown)
+        add_field_layout.addWidget(self.add_field_button)
+
+        # Scroll Area for Table (optional for large data)
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setWidget(self.fields_table)
+
         # Layout for Buttons
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.home_button)
@@ -70,17 +95,33 @@ class ManagerDashboard(QWidget):
         sales_layout.addWidget(self.monthly_sales_label)
         sales_layout.addWidget(self.pending_reports_label)
                 
-        # Main Layout
+        # --- Main Layout ---
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.welcome_label)
-        main_layout.addLayout(sales_layout)
         main_layout.addLayout(button_layout)
-
+        main_layout.addLayout(sales_layout)
+        main_layout.addWidget(scroll_area)  # Add table inside a scroll area
+        main_layout.addLayout(add_field_layout)  # Add new field section
+        
+        
         self.setLayout(main_layout)
 
+    def populate_table(self):
+        """Populate the table with placeholder data."""
+        sample_data = [
+            {"Field Name": "Product 1", "Field Type": "Service", "Options": "[Edit] [x]", "Date Created": "01/01/2001"},
+            {"Field Name": "Product 2", "Field Type": "Product", "Options": "[Edit] [x]", "Date Created": "02/02/2003"}
+        ]
+        self.fields_table.setRowCount(len(sample_data))
+        for row, data in enumerate(sample_data):
+            self.fields_table.setItem(row, 0, QTableWidgetItem(data["Field Name"]))
+            self.fields_table.setItem(row, 1, QTableWidgetItem(data["Field Type"]))
+            self.fields_table.setItem(row, 2, QTableWidgetItem(data["Options"]))
+            self.fields_table.setItem(row, 3, QTableWidgetItem(data["Date Created"]))
+            
+            
     def handle_logout(self):
         """Emit the logout signal when the button is clicked."""
-        self.close()
         self.logout_signal.emit()
             
     def handle_home(self):

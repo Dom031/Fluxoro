@@ -65,25 +65,89 @@ QLabel#welcomeLabel {
     text-align: center;
 }
 
-/* Sales Overview */
-QLabel#salesLabel {
-    font-size: 18px;
-    font-weight: regular;
-    color: white; /* Primary */
-    text-align: center;
+/* Table Widget Styling */
+QTableWidget#fieldsTable {
+    border: 1px solid #5DADE2; /* Accent color */
+    background-color: #34495E; /* Slightly lighter grey */
+    color: #ECF0F1; /* Neutral */
+    gridline-color: #5DADE2; /* Accent color */
+    font-size: 14px; /* Adjust as needed */
+    font-weight: bold; /* Optional */
 }
 
-/* Buttons for Both Pages */
-QPushButton#viewReportsButton,
+/* Table Headers */
+QHeaderView::section {
+    background-color: #2C3E50; /* Primary dark grey */
+    color: #ECF0F1; /* Neutral */
+    border: 1px solid #5DADE2; /* Accent color */
+    padding: 5px; /* Add some padding for a cleaner look */
+    font-size: 14px; /* Adjust header text size */
+    font-weight: bold;
+}
+
+/* Table Cells */
+QTableWidget::item {
+    background-color: #34495E; /* Slightly lighter grey for cells */
+    color: #ECF0F1; /* Neutral */
+    padding: 5px;
+    border: none;
+}
+
+/* Selected Table Cell */
+QTableWidget::item:selected {
+    background-color: #5DADE2; /* Accent */
+    color: #ECF0F1; /* Neutral */
+}
+
+/* Scrollbars */
+QScrollBar:vertical {
+    border: none;
+    background-color: #2C3E50; /* Primary dark grey */
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #5DADE2; /* Accent */
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    background: none;
+    border: none;
+}
+
+/* ComboBox Styling */
+QComboBox#fieldTypeDropdown {
+    background-color: #34495E; /* Slightly lighter grey */
+    color: #ECF0F1;            /* Neutral */
+    border: 1px solid #5DADE2; /* Accent */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+QComboBox#fieldTypeDropdown QAbstractItemView {
+    background-color: #2C3E50; /* Primary Dark Grey */
+    color: #ECF0F1;            /* Neutral */
+    selection-background-color: #5DADE2; /* Accent */
+    selection-color: #ECF0F1;            /* Neutral */
+}
+
+
+
+/* Buttons */
+QPushButton#reportsButton,
 QPushButton#manageFieldsButton,
 QPushButton#homeButton,
 QPushButton#addSalesButton,
 QPushButton#settingsButton,
 QPushButton#helpButton,
 QPushButton#logoutButton,
-QPushButton#loginButton {
-    background-color: #3498DB; /* Accent */
-    color: #ECF0F1;           /* Neutral */
+QPushButton#loginButton,
+QPushButton#addFieldButton  {
+    background-color: #3498DB;
+    color: #ECF0F1;           
     border: none;
     font-size: 16px;
     font-weight: bold;
@@ -92,24 +156,42 @@ QPushButton#loginButton {
 }
 
 /* Hover and Pressed States for Buttons */
-QPushButton#viewReportsButton:hover,
+QPushButton#reportsButton:hover,
 QPushButton#manageFieldsButton:hover,
 QPushButton#homeButton:hover,
 QPushButton#addSalesButton:hover,
 QPushButton#settingsButton:hover,
 QPushButton#helpButton:hover,
 QPushButton#logoutButton:hover,
-QPushButton#loginButton:hover {
-    background-color: #5DADE2; /* Lighter Accent */
+QPushButton#loginButton:hover,
+QPushButton#addFieldButton:hover {
+    background-color: #5DADE2; 
 }
 
-QPushButton#viewReportsButton:pressed,
+QPushButton#reportsButton:pressed,
 QPushButton#manageFieldsButton:pressed,
 QPushButton#homeButton:pressed,
 QPushButton#addSalesButton:pressed,
 QPushButton#settingsButton:pressed,
 QPushButton#helpButton:pressed,
 QPushButton#logoutButton:pressed,
-QPushButton#loginButton:pressed {
-    background-color: #2980B9; /* Darker Accent */
+QPushButton#loginButton:pressed,
+QPushButton#addFieldButton:pressed {
+    background-color: #2980B9;
+}
+
+/* Sales Overview Box Styles */
+QLabel#dailyGoalLabel, 
+QLabel#weeklyGoalLabel,
+QLabel#weeklySalesLabel, 
+QLabel#monthlySalesLabel, 
+QLabel#pendingReportsLabel {
+    font-size: 18px;
+    font-weight: bold;         
+    color: #ECF0F1;              
+    background-color: #34495E;  
+    border: 2px solid #3498DB;   
+    border-radius: 8px;          
+    padding: 10px;               
+    text-align: center;          
 }

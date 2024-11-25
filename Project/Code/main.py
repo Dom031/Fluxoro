@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication
 from ui.login_page import LoginPage
 from ui.user_dashboard import UserDashboard
 from ui.manager_dashboard import ManagerDashboard  # Import Manager Dashboard
+from ui.manage_fields import ManageFieldsPage 
 import sys
 import os
 
@@ -16,13 +17,21 @@ class MainApp:
         self.login_page = LoginPage()
         self.user_dashboard = UserDashboard()
         self.manager_dashboard = ManagerDashboard() 
+        self.manage_fields_page = ManageFieldsPage() 
+
        
 
         # Connect signals
         self.login_page.login_successful.connect(self.show_dashboard)
         self.user_dashboard.logout_signal.connect(self.show_login_page)
+        self.user_dashboard.home_signal.connect(self.show_dashboard)
         self.manager_dashboard.logout_signal.connect(self.show_login_page)
+        self.manager_dashboard.manage_fields_signal.connect(self.show_manage_fields)  # Connect Manage Fields button
 
+        
+        # Add navigation back from Manage Fields to Manager Dashboard
+        self.manage_fields_page.home_signal.connect(self.show_dashboard)
+        self.manage_fields_page.logout_signal.connect(self.show_login_page)
 
     def apply_stylesheet(self):
         """Load and apply the stylesheet."""
@@ -37,6 +46,9 @@ class MainApp:
     def show_dashboard(self, role):
         """Switch to the appropriate dashboard screen based on role."""
         self.login_page.close()
+        self.manager_dashboard.close()
+        self.user_dashboard.close()
+        self.manage_fields_page.close()
         if role == "manager":
             self.manager_dashboard.show()
         else:
@@ -46,6 +58,8 @@ class MainApp:
         """Switch back to the Login Page."""
         self.user_dashboard.close()
         self.manager_dashboard.close()
+        self.manage_fields_page.close()
+
         # Clear login inputs
         self.login_page.username_input.clear()
         self.login_page.password_input.clear()
@@ -56,6 +70,11 @@ class MainApp:
         self.login_page.show_password_checkbox.setChecked(False)
         # Show Login Page
         self.login_page.show()
+
+    def show_manage_fields(self):
+        """Switch to the Manage Fields Page."""
+        self.manager_dashboard.close()  # Close the Manager Dashboard
+        self.manage_fields_page.show()
 
     def run(self):
         """Run the application."""
