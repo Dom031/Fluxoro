@@ -7,7 +7,7 @@ class UserDashboard(QWidget):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("User Dashboard")
+        self.setWindowTitle("Standard Dashboard")
         self.setGeometry(100, 100, 600, 400)
         self.init_ui()
 

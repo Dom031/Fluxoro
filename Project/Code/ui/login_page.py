@@ -5,14 +5,10 @@ from PyQt5.QtCore import (
     pyqtSignal, QTimer, Qt
 )
 
-user_credentials = {
-        "admin": {"password": "1234", "role": "manager"},
-        "user":  {"password": "1234", "role": "user"}, 
-    }
-
 
 class LoginPage(QWidget):
-    login_successful = pyqtSignal(str)   # Signal to notify successful login
+    login_successful = pyqtSignal(str, str)
+
 
     def __init__(self):
         super().__init__()
@@ -101,20 +97,13 @@ class LoginPage(QWidget):
         else:
             self.password_input.setEchoMode(QLineEdit.Password)
 
-
     def handle_login(self):
-        """Handle login logic."""
+        """Emit the login signal with username and password."""
         username = self.username_input.text()
         password = self.password_input.text()
 
-    # Placeholder for validation with roles
-        if username in user_credentials and user_credentials[username]["password"] == password:
-            self.error_label.setText("")
-            role = user_credentials[username]["role"]  # Get the user's role
-            self.login_successful.emit(role)  # Pass the role in the signal
-        else:
-            self.error_label.setText("Invalid username or password!")
-            self.forgot_password_button.setVisible(True)
+        # Emit the signal to MainApp
+        self.login_successful.emit(username, password)
 
     def handle_forgot_password(self):
         """Handle forgot password logic."""
