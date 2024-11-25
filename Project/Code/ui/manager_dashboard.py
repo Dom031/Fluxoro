@@ -74,10 +74,16 @@ class ManagerDashboard(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.welcome_label)
         main_layout.addLayout(sales_layout)
+        main_layout.addWidget(self.welcome_label)
         main_layout.addLayout(button_layout)
 
         self.setLayout(main_layout)
 
+    
+    def update_welcome_message(self, name):
+        """Update the welcome message with the manager's name."""
+        self.welcome_label.setText(f"Welcome back, {name}!")
+        
     def handle_logout(self):
         """Emit the logout signal when the button is clicked."""
         self.close()

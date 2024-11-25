@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 class ManageFieldsPage(QWidget):
 
     logout_signal = pyqtSignal()  # Signal for logout
-    home_signal = pyqtSignal(str)  # Signal for home (manager role)
+    home_signal = pyqtSignal(str, str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
 
     

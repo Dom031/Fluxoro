@@ -44,15 +44,6 @@ class MainApp:
         except FileNotFoundError:
             print("Stylesheet not found. Default style will be used.")
 
-    def handle_login(self, username, password):
-        """Verify login and navigate to the appropriate dashboard."""
-        role = self.verify_login(username, password)
-        if role:
-            self.show_dashboard(role)
-        else:
-            # Display an error message if login fails
-            self.login_page.error_label.setText("Invalid username or password")
-
     def verify_login(self, username, password):
         """Check the login credentials in the database."""
         query = """
@@ -66,15 +57,29 @@ class MainApp:
 
     def handle_login(self, username, password):
         """Verify login and navigate to the appropriate dashboard."""
-        role = self.verify_login(username, password)  # Check the database
-        if role:
-            self.show_dashboard(role)  # Navigate to the appropriate dashboard
+        query = """
+            SELECT User.name, User.role 
+            FROM User 
+            JOIN Login ON User.userID = Login.userID 
+            WHERE Login.username = ? AND Login.passwordHash = ?
+        """
+        self.cursor.execute(query, (username, password))
+        result = self.cursor.fetchone()
+
+        if result:
+            self.name, self.role = result  # Extract name and role from the query result
+            self.show_dashboard(self.role, self.name)
         else:
             self.login_page.error_label.setText("Invalid username or password")
 
 
-    def show_dashboard(self, role):
+    def show_dashboard(self, role, name):
         """Switch to the appropriate dashboard screen based on role."""
+        #stored name and role from handle_login
+        role = role or self.role
+        name = name or self.name
+        print(f"Navigating to dashboard with role: {role}, name: {name}")  # Debug line
+
         # Close all pages
         self.login_page.close()
         self.manager_dashboard.close()
@@ -83,8 +88,10 @@ class MainApp:
 
         # Show the relevant dashboard
         if role == "manager":
+            self.manager_dashboard.update_welcome_message(name)
             self.manager_dashboard.show()
         elif role == "standard":
+            self.user_dashboard.update_welcome_message(name)
             self.user_dashboard.show()
         else:
             print("Invalid role")
@@ -109,6 +116,7 @@ class MainApp:
         """Switch to the Manage Fields Page."""
         self.manager_dashboard.close()  # Close the Manager Dashboard
         self.manage_fields_page.show()
+
 
     def close_connection(self):
         """Close the database connection."""
