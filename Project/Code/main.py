@@ -3,6 +3,7 @@ from ui.login_page import LoginPage
 from ui.user_dashboard import UserDashboard
 from ui.manager_dashboard import ManagerDashboard  # Import Manager Dashboard
 from ui.manage_fields import ManageFieldsPage
+from ui.settings_page import SettingsPage
 import sqlite3  # Import sqlite3 for database integration
 import sys
 import os
@@ -20,13 +21,14 @@ class MainApp:
 
         # Initialize user details
         self.role = None
-        self.name = None  # Initialize attributes
+        self.name = None  
         
         # Initialize screens
         self.login_page = LoginPage()
         self.user_dashboard = UserDashboard()
         self.manager_dashboard = ManagerDashboard()
         self.manage_fields_page = ManageFieldsPage(self.db_connection, self.cursor)
+        self.settings_page = SettingsPage()
 
         # Connect signals
         self.login_page.login_successful.connect(self.handle_login)
@@ -35,10 +37,18 @@ class MainApp:
         self.manager_dashboard.logout_signal.connect(self.show_login_page)
         self.manager_dashboard.manage_fields_signal.connect(self.show_manage_fields)
         self.manage_fields_page.set_user_details(self.role, self.name)
+        self.manager_dashboard.settings_signal.connect(self.show_settings_page)
 
         # Add navigation back from Manage Fields to Manager Dashboard
         self.manage_fields_page.home_signal.connect(self.show_dashboard)
         self.manage_fields_page.logout_signal.connect(self.show_login_page)
+        
+        # Add navigation signals for the settings page
+        self.settings_page.home_signal.connect(self.show_dashboard)
+        self.settings_page.manage_fields_signal.connect(self.show_manage_fields)
+        self.settings_page.reports_signal.connect(lambda: print("Reports page placeholder"))
+        self.settings_page.help_signal.connect(lambda: print("Help page placeholder"))
+        self.settings_page.logout_signal.connect(self.show_login_page)
 
     def apply_stylesheet(self):
         """Load and apply the stylesheet."""
@@ -88,6 +98,7 @@ class MainApp:
         self.manager_dashboard.close()
         self.user_dashboard.close()
         self.manage_fields_page.close()
+        self.settings_page.close()  
 
         # Show the relevant dashboard
         if role == "manager":
@@ -120,7 +131,6 @@ class MainApp:
         self.manager_dashboard.close()  # Close the Manager Dashboard
         self.manage_fields_page.show()
 
-
     def close_connection(self):
         """Close the database connection."""
         self.db_connection.close()
@@ -129,6 +139,12 @@ class MainApp:
         """Run the application."""
         self.login_page.show()
         sys.exit(self.app.exec_())
+
+    def show_settings_page(self):
+        """Show the settings page."""
+        self.manager_dashboard.hide()
+        self.settings_page.show()
+
 
 if __name__ == "__main__":
     app = MainApp()

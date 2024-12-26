@@ -7,6 +7,7 @@ class ManageFieldsPage(QWidget):
     logout_signal = pyqtSignal()  # Signal for logout
     home_signal = pyqtSignal(str, str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
+    settings_signal = pyqtSignal() # Signal for settings
 
     
     
@@ -156,7 +157,9 @@ class ManageFieldsPage(QWidget):
 
     def handle_settings(self):
         """Placeholder for settings navigation."""
-        print("Settings button clicked!")  # Placeholder functionality
+        
+        self.settings_button.clicked.connect(self.handle_settings) 
+ # Placeholder functionality
 
     def add_new_field(self):
         """Handle the addition of a new field."""

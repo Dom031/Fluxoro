@@ -13,7 +13,7 @@ class LoginPage(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Fluxoro Login")
-        self.setGeometry(100, 100, 400, 300)  # Window dimensions
+        self.setGeometry(100, 100, 800, 600)  # Window dimensions
         self.init_ui()
 
     def init_ui(self):
