@@ -15,14 +15,18 @@ class MainApp:
         self.apply_stylesheet()
 
         # Initialize database connection
-        self.db_connection = sqlite3.connect("../Database/SalesApp.db")
+        self.db_connection = sqlite3.connect("Project/Database/SalesApp.db")
         self.cursor = self.db_connection.cursor()
 
+        # Initialize user details
+        self.role = None
+        self.name = None  # Initialize attributes
+        
         # Initialize screens
         self.login_page = LoginPage()
         self.user_dashboard = UserDashboard()
         self.manager_dashboard = ManagerDashboard()
-        self.manage_fields_page = ManageFieldsPage()
+        self.manage_fields_page = ManageFieldsPage(self.db_connection, self.cursor)
 
         # Connect signals
         self.login_page.login_successful.connect(self.handle_login)
@@ -39,7 +43,8 @@ class MainApp:
     def apply_stylesheet(self):
         """Load and apply the stylesheet."""
         try:
-            stylesheet_path = os.path.join("styles", "app_styles.qss")
+            base_dir = os.path.dirname(__file__)  
+            stylesheet_path = os.path.join(base_dir, "styles", "app_styles.qss")
             with open(stylesheet_path, "r") as file:
                 self.app.setStyleSheet(file.read())
         except FileNotFoundError:
@@ -57,7 +62,6 @@ class MainApp:
         return result[0] if result else None
 
     def handle_login(self, username, password):
-        """Verify login and navigate to the appropriate dashboard."""
         query = """
             SELECT User.name, User.role 
             FROM User 
@@ -68,7 +72,7 @@ class MainApp:
         result = self.cursor.fetchone()
 
         if result:
-            self.name, self.role = result  # Extract name and role from the query result
+            self.name, self.role = result  # Store name and role in MainApp
             self.show_dashboard(self.role, self.name)
         else:
             self.login_page.error_label.setText("Invalid username or password")
