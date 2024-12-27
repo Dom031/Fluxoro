@@ -7,7 +7,7 @@ class ManagerDashboard(QWidget):
     home_signal = pyqtSignal(str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
     settings_signal = pyqtSignal() # Signal for settings
-
+    help_signal = pyqtSignal()  # Signal for help
 
     def __init__(self):
         super().__init__()
@@ -50,6 +50,7 @@ class ManagerDashboard(QWidget):
 
         self.help_button = QPushButton("Help")
         self.help_button.setObjectName("helpButton")
+        self.help_button.clicked.connect(self.handle_help)
 
         self.logout_button = QPushButton("Log Out")
         self.logout_button.setObjectName("logoutButton")
@@ -105,3 +106,7 @@ class ManagerDashboard(QWidget):
     def handle_settings(self):
         """Emit the signal to show the settings page."""
         self.settings_signal.emit()
+
+    def handle_help(self):
+        """Placeholder for help navigation."""
+        self.help_signal.emit()

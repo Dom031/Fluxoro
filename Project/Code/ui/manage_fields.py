@@ -8,6 +8,7 @@ class ManageFieldsPage(QWidget):
     home_signal = pyqtSignal(str, str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
     settings_signal = pyqtSignal() # Signal for settings
+    help_signal = pyqtSignal()  # Signal for help
 
     
     
@@ -56,6 +57,7 @@ class ManageFieldsPage(QWidget):
 
         self.help_button = QPushButton("Help")
         self.help_button.setObjectName("helpButton")
+        self.help_button.clicked.connect(self.handle_help)
 
         self.logout_button = QPushButton("Log Out")
         self.logout_button.setObjectName("logoutButton")
@@ -158,6 +160,10 @@ class ManageFieldsPage(QWidget):
     def handle_settings(self):
         """Emit the signal to show the settings page."""
         self.settings_signal.emit()
+
+    def handle_help(self): 
+        """Emit the signal for help ."""
+        self.help_signal.emit()
 
     def add_new_field(self):
         """Handle the addition of a new field."""
