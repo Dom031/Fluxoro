@@ -52,7 +52,7 @@ class ManageFieldsPage(QWidget):
 
         self.settings_button = QPushButton("Settings")
         self.settings_button.setObjectName("settingsButton")
-        self.settings_button.clicked.connect(self.handle_settings)  # Placeholder for settings
+        self.settings_button.clicked.connect(self.handle_settings) 
 
         self.help_button = QPushButton("Help")
         self.help_button.setObjectName("helpButton")
@@ -156,10 +156,8 @@ class ManageFieldsPage(QWidget):
         print("Reports button clicked!")  # Placeholder functionality
 
     def handle_settings(self):
-        """Placeholder for settings navigation."""
-        
-        self.settings_button.clicked.connect(self.handle_settings) 
- # Placeholder functionality
+        """Emit the signal to show the settings page."""
+        self.settings_signal.emit()
 
     def add_new_field(self):
         """Handle the addition of a new field."""

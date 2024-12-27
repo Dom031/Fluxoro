@@ -12,9 +12,6 @@ class MainApp:
     def __init__(self):
         self.app = QApplication(sys.argv)
 
-        # Apply the stylesheet
-        self.apply_stylesheet()
-
         # Initialize database connection
         self.db_connection = sqlite3.connect("Project/Database/SalesApp.db")
         self.cursor = self.db_connection.cursor()
@@ -29,6 +26,10 @@ class MainApp:
         self.manager_dashboard = ManagerDashboard()
         self.manage_fields_page = ManageFieldsPage(self.db_connection, self.cursor)
         self.settings_page = SettingsPage()
+        
+        # Connect dark mode signal from SettingsPage to the toggle_dark_mode method
+        self.settings_page.dark_mode_signal.connect(self.toggle_dark_mode)
+        self.apply_stylesheet("app_styles.qss")
 
         # Connect signals
         self.login_page.login_successful.connect(self.handle_login)
@@ -38,28 +39,41 @@ class MainApp:
         self.manager_dashboard.manage_fields_signal.connect(self.show_manage_fields)
         self.manage_fields_page.set_user_details(self.role, self.name)
         self.manager_dashboard.settings_signal.connect(self.show_settings_page)
+        self.manage_fields_page.settings_signal.connect(self.show_settings_page)
+
 
         # Add navigation back from Manage Fields to Manager Dashboard
         self.manage_fields_page.home_signal.connect(self.show_dashboard)
         self.manage_fields_page.logout_signal.connect(self.show_login_page)
         
-        # Add navigation signals for the settings page
+        # Add navigation signals
         self.settings_page.home_signal.connect(self.show_dashboard)
         self.settings_page.manage_fields_signal.connect(self.show_manage_fields)
         self.settings_page.reports_signal.connect(lambda: print("Reports page placeholder"))
         self.settings_page.help_signal.connect(lambda: print("Help page placeholder"))
         self.settings_page.logout_signal.connect(self.show_login_page)
-
-    def apply_stylesheet(self):
+        
+    def apply_stylesheet(self, stylesheet_filename):
         """Load and apply the stylesheet."""
         try:
-            base_dir = os.path.dirname(__file__)  
-            stylesheet_path = os.path.join(base_dir, "styles", "app_styles.qss")
+            base_dir = os.path.dirname(__file__)
+            stylesheet_path = os.path.join(base_dir, "styles", stylesheet_filename)
+            print(f"Applying stylesheet: {stylesheet_path}")  # Debugging line
             with open(stylesheet_path, "r") as file:
                 self.app.setStyleSheet(file.read())
         except FileNotFoundError:
-            print("Stylesheet not found. Default style will be used.")
+            print(f"Stylesheet {stylesheet_filename} not found. Default style will be used.")
 
+    def toggle_dark_mode(self, dark_mode_enabled):
+        """Change the stylesheet based on dark mode state."""
+        print(f"Dark Mode yes or no : {dark_mode_enabled}")  # Debugging line
+        if dark_mode_enabled:
+            self.apply_stylesheet("dark_app_styles.qss")
+        else:
+            self.apply_stylesheet("app_styles.qss")
+
+                
+            
     def verify_login(self, username, password):
         """Check the login credentials in the database."""
         query = """
@@ -126,10 +140,6 @@ class MainApp:
         # Show Login Page
         self.login_page.show()
 
-    def show_manage_fields(self):
-        """Switch to the Manage Fields Page."""
-        self.manager_dashboard.close()  # Close the Manager Dashboard
-        self.manage_fields_page.show()
 
     def close_connection(self):
         """Close the database connection."""
@@ -140,12 +150,22 @@ class MainApp:
         self.login_page.show()
         sys.exit(self.app.exec_())
 
+
+    def close_all_pages(self):
+        """Close all active pages."""
+        for page in [self.login_page, self.user_dashboard, self.manager_dashboard, self.manage_fields_page, self.settings_page]:
+            page.close()
+
+    def show_manage_fields(self):
+        """Switch to the Manage Fields Page."""
+        self.close_all_pages()  # Close the Manager Dashboard
+        self.manage_fields_page.show()
+        
     def show_settings_page(self):
         """Show the settings page."""
-        self.manager_dashboard.hide()
+        self.close_all_pages()
         self.settings_page.show()
-
-
+        
 if __name__ == "__main__":
     app = MainApp()
     app.run()

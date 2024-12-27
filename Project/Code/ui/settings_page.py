@@ -3,11 +3,12 @@ from PyQt5.QtCore import Qt, pyqtSignal
 
 class SettingsPage(QWidget):
     # Signals for navigation
-    home_signal = pyqtSignal()
+    home_signal = pyqtSignal(str, str)  # Signal for home (manager role)
     manage_fields_signal = pyqtSignal()
     reports_signal = pyqtSignal()
     help_signal = pyqtSignal()
     logout_signal = pyqtSignal()
+    dark_mode_signal = pyqtSignal(bool)  # Add a signal for dark mode toggle
 
     def __init__(self):
         super().__init__()
@@ -24,7 +25,8 @@ class SettingsPage(QWidget):
         # Dark Mode Toggle
         self.dark_mode_checkbox = QCheckBox("Dark Mode")
         self.dark_mode_checkbox.setObjectName("darkModeCheckbox")
-        self.dark_mode_checkbox.stateChanged.connect(self.toggle_dark_mode)
+        self.dark_mode_checkbox.stateChanged.connect(self.handle_dark_mode)
+
         
         # Graph Options
         self.graph_type_label = QLabel("Graph Options")
@@ -48,14 +50,19 @@ class SettingsPage(QWidget):
 
         # Navigation Buttons
         self.home_button = QPushButton("Home")
-        self.home_button.clicked.connect(self.home_signal.emit)
+        self.home_button.setObjectName("homeButton")
+        self.home_button.clicked.connect(self.handle_home)
         self.manage_fields_button = QPushButton("Manage Fields")
+        self.manage_fields_button.setObjectName("manageFieldsButton")
         self.manage_fields_button.clicked.connect(self.manage_fields_signal.emit)
         self.reports_button = QPushButton("Reports")
+        self.reports_button.setObjectName("reportsButton")
         self.reports_button.clicked.connect(self.reports_signal.emit)
         self.help_button = QPushButton("Help")
+        self.help_button.setObjectName("helpButton")
         self.help_button.clicked.connect(self.help_signal.emit)
         self.logout_button = QPushButton("Log Out")
+        self.logout_button.setObjectName("logoutButton")        
         self.logout_button.clicked.connect(self.logout_signal.emit)
 
         # Layout
@@ -92,10 +99,14 @@ class SettingsPage(QWidget):
         
         self.setLayout(self.layout)
         
-    def toggle_dark_mode(self, state):
-        if state == Qt.Checked:
-            print("Dark mode enabled!")
-            # Logic to apply dark stylesheet
-        else:
-            print("Dark mode disabled!")
-            # Logic to revert to default stylesheet
+        
+    def handle_home(self):
+        """Emit a signal to return to the Home page."""
+        self.home_signal.emit(self.role, self.name)  # Emit role and name signal       
+        
+
+    def handle_dark_mode(self, state):
+        """Emit signal to MainApp to apply the correct stylesheet."""
+        dark_mode_enabled = (state == Qt.Checked)
+        print(f"Dark Mode Toggled: {dark_mode_enabled}")  # Debugging line
+        self.dark_mode_signal.emit(dark_mode_enabled)  # Emit the signal to toggle dark mode
