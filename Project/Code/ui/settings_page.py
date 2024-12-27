@@ -9,6 +9,8 @@ class SettingsPage(QWidget):
     help_signal = pyqtSignal()
     logout_signal = pyqtSignal()
     dark_mode_signal = pyqtSignal(bool)  # Add a signal for dark mode toggle
+    settings_signal = pyqtSignal() # Signal for settings
+
 
     def __init__(self):
         super().__init__()
@@ -80,6 +82,10 @@ class SettingsPage(QWidget):
         self.manage_fields_button.setObjectName("manageFieldsButton")
         self.manage_fields_button.clicked.connect(self.manage_fields_signal.emit)
 
+        self.settings_button = QPushButton("Settings")
+        self.settings_button.setObjectName("settingsButton")
+        self.settings_button.clicked.connect(self.settings_signal.emit) 
+
         self.reports_button = QPushButton("Reports")
         self.reports_button.setObjectName("reportsButton")
         self.reports_button.clicked.connect(self.reports_signal.emit)
@@ -97,6 +103,7 @@ class SettingsPage(QWidget):
         self.nav_buttons_layout.addWidget(self.home_button)
         self.nav_buttons_layout.addWidget(self.manage_fields_button)
         self.nav_buttons_layout.addWidget(self.reports_button)
+        self.nav_buttons_layout.addWidget(self.settings_button)
         self.nav_buttons_layout.addWidget(self.help_button)
         self.nav_buttons_layout.addWidget(self.logout_button)
 

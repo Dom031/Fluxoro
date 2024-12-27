@@ -69,6 +69,7 @@ class MainApp:
         self.help_page.home_signal.connect(self.show_dashboard)
         self.help_page.manage_fields_signal.connect(self.show_manage_fields)
         self.help_page.logout_signal.connect(self.show_login_page)
+        self.help_page.settings_signal.connect(self.show_settings_page)
 
         # Dark Mode Signal
         self.settings_page.dark_mode_signal.connect(self.toggle_dark_mode)
