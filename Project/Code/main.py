@@ -5,6 +5,7 @@ from ui.manager_dashboard import ManagerDashboard
 from ui.manage_fields import ManageFieldsPage
 from ui.settings_page import SettingsPage
 from ui.help_page import HelpPage
+from ui.reports_page import ReportsPage
 import sqlite3  # Import sqlite3 for database integration
 import sys
 import os
@@ -29,6 +30,7 @@ class MainApp:
         self.manage_fields_page = ManageFieldsPage(self.db_connection, self.cursor)
         self.settings_page = SettingsPage()
         self.help_page = HelpPage()
+        self.reports_page = ReportsPage(self.db_connection)  # Add ReportsPage here
 
         # Connect signals
         self.connect_signals()
@@ -51,6 +53,9 @@ class MainApp:
         self.manager_dashboard.settings_signal.connect(self.show_settings_page)
         self.manager_dashboard.help_signal.connect(self.show_help_page)
 
+        # **Connect the report signal from the Manager Dashboard to the reports page**
+        self.manager_dashboard.report_signal.connect(self.show_reports_page)
+
         # Manage Fields Page Signals
         self.manage_fields_page.set_user_details(self.role, self.name)
         self.manage_fields_page.settings_signal.connect(self.show_settings_page)
@@ -61,7 +66,7 @@ class MainApp:
         # Settings Page Signals
         self.settings_page.home_signal.connect(self.show_dashboard)
         self.settings_page.manage_fields_signal.connect(self.show_manage_fields)
-        self.settings_page.reports_signal.connect(lambda: print("Reports page placeholder"))  # Placeholder
+        self.settings_page.reports_signal.connect(self.show_reports_page)  # Add Reports Page signal
         self.settings_page.help_signal.connect(self.show_help_page)
         self.settings_page.logout_signal.connect(self.show_login_page)
 
@@ -71,9 +76,16 @@ class MainApp:
         self.help_page.logout_signal.connect(self.show_login_page)
         self.help_page.settings_signal.connect(self.show_settings_page)
 
+        # Reports Page Signals
+        self.reports_page.home_signal.connect(self.show_dashboard)
+        self.reports_page.manage_fields_signal.connect(self.show_manage_fields)
+        self.reports_page.logout_signal.connect(self.show_login_page)
+        self.reports_page.settings_signal.connect(self.show_settings_page)
+
         # Dark Mode Signal
         self.settings_page.dark_mode_signal.connect(self.toggle_dark_mode)
 
+    
     def apply_stylesheet(self, stylesheet_filename):
         """Load and apply the stylesheet."""
         try:
@@ -138,6 +150,11 @@ class MainApp:
         """Show the help page."""
         self.close_all_pages()
         self.help_page.show()
+
+    def show_reports_page(self):
+        """Show the reports page."""
+        self.close_all_pages()
+        self.reports_page.show()
 
     def close_all_pages(self):
         """Close all active pages."""

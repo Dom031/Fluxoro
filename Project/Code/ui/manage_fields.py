@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem, QComboBox, QScrollArea, QLineEdit, QHeaderView
 from PyQt5.QtCore import Qt, pyqtSignal
-import datetime
 
 class ManageFieldsPage(QWidget):
 

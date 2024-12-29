@@ -23,3 +23,6 @@ Thumbs.db
 
 # Ignore all other text-based design notes
 Design/*.txt
+
+# Ignore virtual environment folder
+myenv/
