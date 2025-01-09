@@ -11,7 +11,6 @@ class SettingsPage(QWidget):
     dark_mode_signal = pyqtSignal(bool)  # Add a signal for dark mode toggle
     settings_signal = pyqtSignal() # Signal for settings
 
-
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Settings")
@@ -24,6 +23,40 @@ class SettingsPage(QWidget):
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setObjectName("title_label")
         
+        # Navigation Buttons Layout
+        self.home_button = QPushButton("Home")
+        self.home_button.setObjectName("homeButton")
+        self.home_button.clicked.connect(self.home_signal.emit)
+        
+        self.manage_fields_button = QPushButton("Manage Fields")
+        self.manage_fields_button.setObjectName("manageFieldsButton")
+        self.manage_fields_button.clicked.connect(self.manage_fields_signal.emit)
+
+        self.reports_button = QPushButton("Reports")
+        self.reports_button.setObjectName("reportsButton")
+        self.reports_button.clicked.connect(self.reports_signal.emit)
+
+        self.settings_button = QPushButton("Settings")
+        self.settings_button.setObjectName("settingsButton")
+        self.settings_button.clicked.connect(self.settings_signal.emit)
+
+        self.help_button = QPushButton("Help")
+        self.help_button.setObjectName("helpButton")
+        self.help_button.clicked.connect(self.help_signal.emit)
+
+        self.logout_button = QPushButton("Log Out")
+        self.logout_button.setObjectName("logoutButton")        
+        self.logout_button.clicked.connect(self.logout_signal.emit)
+
+        # Navigation Buttons Layout (top of the page)
+        nav_button_layout = QHBoxLayout()
+        nav_button_layout.addWidget(self.home_button)
+        nav_button_layout.addWidget(self.manage_fields_button)
+        nav_button_layout.addWidget(self.reports_button)
+        nav_button_layout.addWidget(self.settings_button)
+        nav_button_layout.addWidget(self.help_button)
+        nav_button_layout.addWidget(self.logout_button)
+
         # Dark Mode Toggle
         self.dark_mode_checkbox = QCheckBox("Dark Mode")
         self.dark_mode_checkbox.setObjectName("darkModeCheckbox")
@@ -73,56 +106,23 @@ class SettingsPage(QWidget):
         language_group_layout.addWidget(self.language_dropdown)
         language_group_box.setLayout(language_group_layout)
 
-        # Buttons Layout
-        self.home_button = QPushButton("Home")
-        self.home_button.setObjectName("homeButton")
-        self.home_button.clicked.connect(self.home_signal.emit)
-        
-        self.manage_fields_button = QPushButton("Manage Fields")
-        self.manage_fields_button.setObjectName("manageFieldsButton")
-        self.manage_fields_button.clicked.connect(self.manage_fields_signal.emit)
-
-        self.settings_button = QPushButton("Settings")
-        self.settings_button.setObjectName("settingsButton")
-        self.settings_button.clicked.connect(self.settings_signal.emit) 
-
-        self.reports_button = QPushButton("Reports")
-        self.reports_button.setObjectName("reportsButton")
-        self.reports_button.clicked.connect(self.reports_signal.emit)
-
-        self.help_button = QPushButton("Help")
-        self.help_button.setObjectName("helpButton")
-        self.help_button.clicked.connect(self.help_signal.emit)
-
-        self.logout_button = QPushButton("Log Out")
-        self.logout_button.setObjectName("logoutButton")        
-        self.logout_button.clicked.connect(self.logout_signal.emit)
-
-        # Navigation Buttons Layout
-        self.nav_buttons_layout = QHBoxLayout()
-        self.nav_buttons_layout.addWidget(self.home_button)
-        self.nav_buttons_layout.addWidget(self.manage_fields_button)
-        self.nav_buttons_layout.addWidget(self.reports_button)
-        self.nav_buttons_layout.addWidget(self.settings_button)
-        self.nav_buttons_layout.addWidget(self.help_button)
-        self.nav_buttons_layout.addWidget(self.logout_button)
-
         # Main Layout
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.title_label)
+        main_layout = QVBoxLayout(self)
         
-        # Dark Mode Section
-        self.layout.addLayout(self.dark_mode_layout)
+        # Add the navigation buttons first
+        main_layout.addLayout(nav_button_layout)
+        main_layout.addWidget(self.title_label)
         
-        # Grouped Sections
-        self.layout.addWidget(graph_group_box)
-        self.layout.addWidget(data_format_group_box)
-        self.layout.addWidget(language_group_box)
+        # Add the Dark Mode section
+        main_layout.addLayout(self.dark_mode_layout)
         
-        # Navigation Buttons at the bottom
-        self.layout.addLayout(self.nav_buttons_layout)
-        
-        self.setLayout(self.layout)
+        # Add the grouped sections
+        main_layout.addWidget(graph_group_box)
+        main_layout.addWidget(data_format_group_box)
+        main_layout.addWidget(language_group_box)
+
+        # Set the layout to the window
+        self.setLayout(main_layout)
 
     def handle_dark_mode(self, state):
         """Emit signal to MainApp to apply the correct stylesheet."""

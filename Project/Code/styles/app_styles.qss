@@ -134,7 +134,61 @@ QComboBox#fieldTypeDropdown QAbstractItemView {
     selection-color: #ECF0F1;            /* Neutral */
 }
 
+/* QTabWidget Styling */
+QTabWidget {
+    background-color: #2C3E50;
+    /* Primary: Dark Grey */
+    border: 1px solid #3498DB;
+    /* Accent: Electric Blue */
+}
 
+/* QTabBar Styling */
+QTabBar::tab {
+    background-color: #2C3E50;
+    /* Primary: Dark Grey */
+    color: #ECF0F1;
+    /* Neutral: Very Light Grey */
+    border: 1px solid #3498DB;
+    /* Accent: Electric Blue */
+    padding: 10px;
+    /* Add some padding for better appearance */
+    min-width: 100px;
+    /* Set minimum width for uniform tabs */
+    text-align: center;
+    /* Center the text */
+}
+
+/* QTabBar Active Tab */
+QTabBar::tab:selected {
+    background-color: #3498DB;
+    /* Accent: Electric Blue */
+    color: #ECF0F1;
+    /* Neutral: Very Light Grey */
+    font-weight: bold;
+    /* Make the active tab stand out */
+}
+
+/* QTabBar Hover */
+QTabBar::tab:hover {
+    background-color: #1F618D;
+    /* Slightly brighter Electric Blue on hover */
+    color: #ECF0F1;
+    /* Neutral: Very Light Grey */
+}
+
+/* Adjust the alignment of the tabs */
+QTabBar::tab {
+    margin: 2px;
+    /* Add spacing between tabs */
+}
+
+/* Stretch tabs to fill the width */
+QTabWidget::pane {
+    border: none;
+    /* Remove the border around the content area */
+    padding: 5px;
+    /* Add some padding inside the content area */
+}
 
 /* Buttons */
 QPushButton#reportsButton,

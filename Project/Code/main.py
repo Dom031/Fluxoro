@@ -62,11 +62,12 @@ class MainApp:
         self.manage_fields_page.home_signal.connect(self.show_dashboard)
         self.manage_fields_page.logout_signal.connect(self.show_login_page)
         self.manage_fields_page.help_signal.connect(self.show_help_page)
+        self.manage_fields_page.report_signal.connect(self.show_reports_page)
 
         # Settings Page Signals
         self.settings_page.home_signal.connect(self.show_dashboard)
         self.settings_page.manage_fields_signal.connect(self.show_manage_fields)
-        self.settings_page.reports_signal.connect(self.show_reports_page)  # Add Reports Page signal
+        self.settings_page.reports_signal.connect(self.show_reports_page) 
         self.settings_page.help_signal.connect(self.show_help_page)
         self.settings_page.logout_signal.connect(self.show_login_page)
 
@@ -75,12 +76,15 @@ class MainApp:
         self.help_page.manage_fields_signal.connect(self.show_manage_fields)
         self.help_page.logout_signal.connect(self.show_login_page)
         self.help_page.settings_signal.connect(self.show_settings_page)
+        self.help_page.reports_signal.connect(self.show_reports_page)
 
         # Reports Page Signals
         self.reports_page.home_signal.connect(self.show_dashboard)
         self.reports_page.manage_fields_signal.connect(self.show_manage_fields)
         self.reports_page.logout_signal.connect(self.show_login_page)
         self.reports_page.settings_signal.connect(self.show_settings_page)
+        self.reports_page.help_signal.connect(self.show_help_page)
+
 
         # Dark Mode Signal
         self.settings_page.dark_mode_signal.connect(self.toggle_dark_mode)
@@ -157,8 +161,11 @@ class MainApp:
         self.reports_page.show()
 
     def close_all_pages(self):
-        """Close all active pages."""
-        for page in [self.login_page, self.user_dashboard, self.manager_dashboard, self.manage_fields_page, self.settings_page, self.help_page]:
+        """Close all active pages but keep references to them, so they can be shown again."""
+        # Iterate over the pages and close each one
+        for page in [self.login_page, self.user_dashboard, self.manager_dashboard, 
+                    self.manage_fields_page, self.settings_page, self.help_page, 
+                    self.reports_page]:  # Make sure ReportsPage is included here
             page.close()
 
     def close_connection(self):

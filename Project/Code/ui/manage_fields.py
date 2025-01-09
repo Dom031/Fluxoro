@@ -8,6 +8,7 @@ class ManageFieldsPage(QWidget):
     manage_fields_signal = pyqtSignal()  # Signal for manage fields
     settings_signal = pyqtSignal() # Signal for settings
     help_signal = pyqtSignal()  # Signal for help
+    report_signal = pyqtSignal()  # Signal for reports
 
     
     
@@ -154,8 +155,7 @@ class ManageFieldsPage(QWidget):
 
     def handle_reports(self):
         """Placeholder for reports navigation."""
-        print("Reports button clicked!")  # Placeholder functionality
-
+        self.report_signal.emit()
     def handle_settings(self):
         """Emit the signal to show the settings page."""
         self.settings_signal.emit()
