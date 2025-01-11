@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView
 from PyQt5.QtCore import QDate, Qt, pyqtSignal
+import pyqtgraph as pg
+from pyqtgraph import PlotWidget, BarGraphItem
 import pandas as pd
 import os
 
@@ -23,6 +25,31 @@ class ReportsPage(QWidget):
         # Title Label
         self.title_label = QLabel("Sales Report")
         self.title_label.setAlignment(Qt.AlignCenter)
+        
+        # Navigation Buttons Layout
+        self.home_button = QPushButton("Home")
+        self.home_button.setObjectName("homeButton")
+        self.home_button.clicked.connect(self.home_signal.emit)
+        
+        self.manage_fields_button = QPushButton("Manage Fields")
+        self.manage_fields_button.setObjectName("manageFieldsButton")
+        self.manage_fields_button.clicked.connect(self.manage_fields_signal.emit)
+
+        self.reports_button = QPushButton("Reports")
+        self.reports_button.setObjectName("reportsButton")
+        self.reports_button.clicked.connect(self.reports_signal.emit)
+
+        self.settings_button = QPushButton("Settings")
+        self.settings_button.setObjectName("settingsButton")
+        self.settings_button.clicked.connect(self.settings_signal.emit)
+
+        self.help_button = QPushButton("Help")
+        self.help_button.setObjectName("helpButton")
+        self.help_button.clicked.connect(self.help_signal.emit)
+
+        self.logout_button = QPushButton("Log Out")
+        self.logout_button.setObjectName("logoutButton")        
+        self.logout_button.clicked.connect(self.logout_signal.emit)
 
         # Tab Widget for Day, Week, Month
         self.tabs = QTabWidget(self)
@@ -60,6 +87,19 @@ class ReportsPage(QWidget):
         self.report_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.report_table.horizontalHeader().setStretchLastSection(True)
 
+        nav_button_layout = QHBoxLayout()
+        nav_button_layout.addWidget(self.home_button)
+        nav_button_layout.addWidget(self.manage_fields_button)
+        nav_button_layout.addWidget(self.reports_button)
+        nav_button_layout.addWidget(self.settings_button)
+        nav_button_layout.addWidget(self.help_button)
+        nav_button_layout.addWidget(self.logout_button)
+
+        # PyQtGraph Bar Chart Widget
+        self.bar_chart_widget = pg.GraphicsLayoutWidget()
+        self.bar_plot = self.bar_chart_widget.addPlot(title="Sales Comparison")
+        self.bar_plot.showGrid(x=True, y=True)
+
         # Layout for buttons and table
         self.button_layout = QHBoxLayout()
         self.button_layout.addWidget(self.generate_report_button)
@@ -67,7 +107,9 @@ class ReportsPage(QWidget):
 
         self.main_layout = QVBoxLayout(self)
         self.main_layout.addWidget(self.title_label)
+        self.main_layout.addLayout(nav_button_layout)
         self.main_layout.addWidget(self.tabs)
+        self.main_layout.addWidget(self.bar_chart_widget)  # Add the bar chart
         self.main_layout.addLayout(self.button_layout)
         self.main_layout.addWidget(self.report_table)
 
@@ -89,8 +131,6 @@ class ReportsPage(QWidget):
         """
 
         query += f" AND EXISTS (SELECT 1 FROM sales WHERE field_id = f.id AND date BETWEEN '{last_year_start_date}' AND '{last_year_end_date}')"
-
-        print("Generated Query:", query)  # Debugging query
 
         # Execute query and fetch results
         cursor = self.db_connection.cursor()
@@ -166,6 +206,9 @@ class ReportsPage(QWidget):
             item.setForeground(Qt.black)  # Set the text color to black for better readability
             self.report_table.setItem(len(data), col, item)
 
+        # Generate the bar chart based on the updated data
+        self.generate_bar_chart()
+
     def generate_report(self):
         start_date = QDate.currentDate().toString('yyyy-MM-dd')
         end_date = QDate.currentDate().toString('yyyy-MM-dd')
@@ -219,3 +262,58 @@ class ReportsPage(QWidget):
                 print("Error exporting to Excel:", e)
         else:
             print("No data to export.")
+
+
+    def generate_bar_chart(self):
+        # Clear the previous plot
+        self.bar_plot.clear()
+
+        # Extract data from the report table
+        field_names = []
+        current_sales = []
+        last_year_sales = []
+        goals = []
+
+        for row in range(self.report_table.rowCount()):  # Exclude the "Total" row
+            field_name = self.report_table.item(row, 0).text()
+            sales = float(self.report_table.item(row, 1).text())
+            last_year = float(self.report_table.item(row, 2).text()) if self.report_table.item(row, 2).text() != "N/A" else 0
+            goal = float(self.report_table.item(row, 3).text())
+
+            field_names.append(field_name)
+            current_sales.append(sales)
+            last_year_sales.append(last_year)
+            goals.append(goal)
+
+        # Set bar widths and positions
+        x_positions = list(range(len(field_names)))
+        bar_width = 0.2
+
+        # Create the bar items with adjusted positions
+        current_sales_bars = BarGraphItem(
+            x=[x - bar_width for x in x_positions], height=current_sales, width=bar_width, brush='b'
+        )
+        last_year_sales_bars = BarGraphItem(
+            x=[x for x in x_positions], height=last_year_sales, width=bar_width, brush='g'
+        )
+        goals_bars = BarGraphItem(
+            x=[x + bar_width for x in x_positions], height=goals, width=bar_width, brush='r'
+        )
+
+        # Add bars to the plot
+        self.bar_plot.addItem(current_sales_bars)
+        self.bar_plot.addItem(last_year_sales_bars)
+        self.bar_plot.addItem(goals_bars)
+
+        # Customize the x-axis
+        x_axis_labels = [(i, field) for i, field in enumerate(field_names)]
+        self.bar_plot.getAxis('bottom').setTicks([x_axis_labels])
+
+        # Add legend
+        if not hasattr(self, 'legend'):  # Add legend only once
+            self.legend = pg.LegendItem((80, 60), offset=(30, 30))
+            self.legend.setParentItem(self.bar_plot.graphicsItem())
+        self.legend.clear()
+        self.legend.addItem(current_sales_bars, "Current Sales")
+        self.legend.addItem(last_year_sales_bars, "Last Year Sales")
+        self.legend.addItem(goals_bars, "Goals")
