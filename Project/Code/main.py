@@ -1,12 +1,14 @@
 from PyQt5.QtWidgets import QApplication
 from ui.login_page import LoginPage
 from ui.user_dashboard import UserDashboard
-from ui.manager_dashboard import ManagerDashboard 
+from ui.manager_dashboard import ManagerDashboard
 from ui.manage_fields import ManageFieldsPage
 from ui.settings_page import SettingsPage
 from ui.help_page import HelpPage
 from ui.reports_page import ReportsPage
-import sqlite3  # Import sqlite3 for database integration
+from ui.user_settings import UserSettingsPage  # Import User Settings
+from ui.user_help import UserHelpPage  # Import User Help
+import sqlite3
 import sys
 import os
 
@@ -30,7 +32,9 @@ class MainApp:
         self.manage_fields_page = ManageFieldsPage(self.db_connection, self.cursor)
         self.settings_page = SettingsPage()
         self.help_page = HelpPage()
-        self.reports_page = ReportsPage(self.db_connection)  # Add ReportsPage here
+        self.reports_page = ReportsPage(self.db_connection)
+        self.user_settings_page = UserSettingsPage()  # Added User Settings Page
+        self.user_help_page = UserHelpPage()  # Added User Help Page
 
         # Connect signals
         self.connect_signals()
@@ -40,20 +44,34 @@ class MainApp:
 
     def connect_signals(self):
         """Connect all signals for navigation and functionality."""
+
         # Login Page Signals
         self.login_page.login_successful.connect(self.handle_login)
 
         # User Dashboard Signals
         self.user_dashboard.logout_signal.connect(self.show_login_page)
         self.user_dashboard.home_signal.connect(self.show_dashboard)
+        self.user_dashboard.user_settings_signal.connect(self.show_user_settings_page)  # New
+        self.user_dashboard.user_help_signal.connect(self.show_user_help_page)  # New
+
+        # User Settings Page Signals
+        self.user_settings_page.home_signal.connect(self.show_dashboard)
+        #self.user_settings_page.add_sales_signal.connect(self.show_add_sales_page)  # If needed
+        self.user_settings_page.user_help_signal.connect(self.show_user_help_page)
+        self.user_settings_page.logout_signal.connect(self.show_login_page)
+        self.user_settings_page.dark_mode_signal.connect(self.toggle_dark_mode)  # Dark mode toggle
+
+        # User Help Page Signals
+        self.user_help_page.home_signal.connect(self.show_dashboard)
+        #self.user_help_page.add_sales_signal.connect(self.show_add_sales_page)  # If needed
+        self.user_help_page.user_settings_signal.connect(self.show_user_settings_page)
+        self.user_help_page.logout_signal.connect(self.show_login_page)
 
         # Manager Dashboard Signals
         self.manager_dashboard.logout_signal.connect(self.show_login_page)
         self.manager_dashboard.manage_fields_signal.connect(self.show_manage_fields)
         self.manager_dashboard.settings_signal.connect(self.show_settings_page)
         self.manager_dashboard.help_signal.connect(self.show_help_page)
-
-        # **Connect the report signal from the Manager Dashboard to the reports page**
         self.manager_dashboard.report_signal.connect(self.show_reports_page)
 
         # Manage Fields Page Signals
@@ -67,7 +85,7 @@ class MainApp:
         # Settings Page Signals
         self.settings_page.home_signal.connect(self.show_dashboard)
         self.settings_page.manage_fields_signal.connect(self.show_manage_fields)
-        self.settings_page.reports_signal.connect(self.show_reports_page) 
+        self.settings_page.reports_signal.connect(self.show_reports_page)
         self.settings_page.help_signal.connect(self.show_help_page)
         self.settings_page.logout_signal.connect(self.show_login_page)
 
@@ -85,11 +103,9 @@ class MainApp:
         self.reports_page.settings_signal.connect(self.show_settings_page)
         self.reports_page.help_signal.connect(self.show_help_page)
 
-
         # Dark Mode Signal
         self.settings_page.dark_mode_signal.connect(self.toggle_dark_mode)
 
-    
     def apply_stylesheet(self, stylesheet_filename):
         """Load and apply the stylesheet."""
         try:
@@ -160,12 +176,23 @@ class MainApp:
         self.close_all_pages()
         self.reports_page.show()
 
+    def show_user_settings_page(self):
+        """Show the User Settings page."""
+        self.close_all_pages()
+        self.user_settings_page.show()
+
+    def show_user_help_page(self):
+        """Show the User Help page."""
+        self.close_all_pages()
+        self.user_help_page.show()
+
     def close_all_pages(self):
         """Close all active pages but keep references to them, so they can be shown again."""
-        # Iterate over the pages and close each one
-        for page in [self.login_page, self.user_dashboard, self.manager_dashboard, 
-                    self.manage_fields_page, self.settings_page, self.help_page, 
-                    self.reports_page]:  # Make sure ReportsPage is included here
+        for page in [
+            self.login_page, self.user_dashboard, self.manager_dashboard,
+            self.manage_fields_page, self.settings_page, self.help_page,
+            self.reports_page, self.user_settings_page, self.user_help_page  # Added user pages
+        ]:
             page.close()
 
     def close_connection(self):
