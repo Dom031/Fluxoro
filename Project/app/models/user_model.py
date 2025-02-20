@@ -1,0 +1,1 @@
+# Model for user-related database operations

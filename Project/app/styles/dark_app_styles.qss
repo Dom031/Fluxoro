@@ -1,0 +1,169 @@
+/* General Styles */
+QWidget {
+    background-color: #121212;  /* Deep dark grey */
+    color: #ECECEC;            /* Light grey for readability */
+}
+
+/* Labels */
+QLabel {
+    font-size: 16px;
+    color: #ECECEC;
+}
+
+QLabel#welcomeLabel, QLabel#dailyGoalLabel, QLabel#weeklyGoalLabel, 
+QLabel#weeklySalesLabel, QLabel#monthlySalesLabel, QLabel#pendingReportsLabel {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #1F1F1F;  /* Dark grey */
+    border: 2px solid #5DADE2;   /* Light blue accent */
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+QLabel#errorLabel {
+    color: #E74C3C; /* Red error text */
+}
+
+/* Input Fields */
+QLineEdit {
+    background-color: #1A1A1A;  /* Dark input fields */
+    color: #ECECEC;
+    border: 1px solid #5DADE2;  /* Blue accent */
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Checkboxes */
+QCheckBox {
+    color: #ECECEC;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #2874A6;
+    color: #ECECEC;
+    border: 2px solid #2980B9;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: #5DADE2;
+    border-color: #1F618D;
+}
+
+QPushButton:pressed {
+    background-color: #2980B9;
+    border-color: #1F4E75;
+}
+
+/* Special Buttons */
+QPushButton#forgotPasswordButton {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+QPushButton#forgotPasswordButton:hover {
+    color: #5DADE2;
+}
+
+/* Table Styling */
+QTableWidget {
+    border: 1px solid #5DADE2;
+    background-color: #1A1A1A;
+    color: #ECECEC;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Table Headers */
+QHeaderView::section {
+    background-color: #121212;
+    color: #ECECEC;
+    border: 1px solid #5DADE2;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Scrollbars */
+QScrollBar:vertical {
+    border: none;
+    background-color: #121212;
+    width: 10px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #5DADE2;
+    min-height: 20px;
+}
+
+/* Combobox */
+QComboBox {
+    background-color: #1A1A1A;
+    color: #ECECEC;
+    border: 1px solid #5DADE2;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #121212;
+    color: #ECECEC;
+}
+
+/* Tabs */
+QTabWidget {
+    background-color: #121212;
+    border: 1px solid #5DADE2;
+}
+
+QTabBar::tab {
+    background-color: #121212;
+    color: #ECECEC;
+    border: 1px solid #5DADE2;
+    padding: 10px;
+    min-width: 100px;
+    text-align: center;
+}
+
+QTabBar::tab:selected {
+    background-color: #5DADE2;
+    font-weight: bold;
+}
+
+QTabBar::tab:hover {
+    background-color: #1F618D;
+}
+
+QTabWidget::pane {
+    border: none;
+    padding: 5px;
+}
+
+/* Delete Button */
+QPushButton#deleteButton {
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    min-width: 30px;  
+    max-width: 35px;  
+    min-height: 27px; 
+    max-height: 27px;
+    font-size: 14px;   
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+    text-align: center; 
+}
+
+QPushButton#deleteButton:hover {
+    background-color: #C0392B;
+}
