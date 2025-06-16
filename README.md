@@ -1,54 +1,91 @@
-# Fluxoro - Final Year Project
+# Fluxoro – Automated Sales Management System
 
-**Fluxoro** is a Python-based desktop application developed as part of my final year project for the **BSc Computer Science** program at the University of Hertfordshire. The goal of this project is to create an **Automated Sales System** to streamline sales data entry, management, and reporting. This document serves as a reflection of my technical skills, design process, and implementation strategies.
+**Fluxoro** is a Python-based desktop application built as my final year project for the **BSc (Hons) Computer Science (Software Engineering)** degree at the University of Hertfordshire (achieved First Class Honours). This project showcases my skills in backend development, database integration, and user interface design.
 
----
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Setup](#setup)
-- [Current Progress](#current-progress)
-- [Future Goals](#future-goals)
+The goal of Fluxoro is to provide a streamlined solution for managing and reporting retail sales data, automating repetitive tasks, and enabling non-technical staff to interact with business data effortlessly.
 
 ---
 
-## Introduction
+## 📋 Table of Contents
 
-This project was undertaken as part of the **Software Engineering Project** module, which focuses on designing, implementing, and documenting a comprehensive software solution. The system is designed to handle the entry and management of sales data, generate reports, and provide a user-friendly interface for interaction.
-
-The **Fluxoro** name was chosen to reflect its dynamic and streamlined nature, while adhering to the principles of good software design and usability.
-
----
-
-## Features
-
-- **Secure Login System**: Password-protected user access with features like toggleable visibility for username and password.
-- **Database Integration**: Built using SQLite, ensuring data persistence and efficient handling of sales records.
-- **Modular Design**: Organized codebase with reusable components for easy scalability.
-- **User Interface**: Developed using PyQt5 with a custom stylesheet for a professional and consistent look.
-- **Error Handling**: Real-time feedback for invalid inputs and login attempts.
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Setup & Usage](#setup--usage)
+- [Project Structure](#project-structure)
+- [Screenshots](#screenshots)
+- [Planned Improvements](#planned-improvements)
 
 ---
 
-## Technologies
+## 📌 Overview
 
-- **Python**: Core programming language for development.
-- **PyQt5**: Framework for building the graphical user interface.
-- **SQLite**: Database for storing and managing sales data.
-- **QSS**: For consistent styling and adherence to the project's color scheme.
+Fluxoro was developed for the **Software Engineering Project** module and built using Python, PyQt5, and SQLite. It is designed to replace manual sales tracking methods with a clean, user-friendly interface that supports sales entry, reporting, and management.
 
---- 
+It reflects a modular, scalable design following the **Model-View-Controller (MVC)** pattern, with built-in export capabilities and error handling.
 
-## Notes 
+---
 
-This repository contains:
+## ✨ Key Features
 
-- **Codebase**: Organized to subdirectories for UI components, styles and utilities.
-- **Designs**: Diagrams, ERD and wireframes showcasing the planning process.
-- **Database**: SQLite database file with schema and test data.
+- 🔐 **Secure Login System** – Credential validation with feedback and UI toggles.
+- 📊 **Automated Report Generation** – Export sales reports to **CSV, Excel, and PDF** formats.
+- 🧱 **Modular Codebase** – Clean architecture with reusable UI components.
+- 🖥️ **Custom GUI with PyQt5** – Styled using QSS for a polished, responsive interface.
+- 💾 **SQLite Integration** – Local database for sales storage and retrieval.
+- ❗ **Real-Time Validation** – Error handling and form feedback across the app.
 
-## Acknowledgments 
+---
 
-This project is a culmination of the skills gained throughout the degree program. Special thanks to my tutors, project supervisor, and peers who helped and supported during the development process. 
+## 🛠️ Tech Stack
+
+| Technology | Use |
+|------------|-----|
+| **Python** | Core application logic |
+| **PyQt5** | GUI development |
+| **SQLite** | Local database |
+| **Pandas** | Data manipulation and report export |
+| **QSS** | Custom styling for UI components |
+| **GitHub** | Version control and project tracking |
+
+---
+
+## 🧩 Project Structure
+fluxoro/
+├── controllers/ # Business logic & flow control
+├── database/ # SQLite schema & connection logic
+├── models/ # Data handling and utilities
+├── reports/ # CSV, Excel, PDF generation
+├── styles/ # QSS files for dark mode and UI styling
+├── ui/ # PyQt5 GUI files and dialogs
+└── main.py # Application entry point
+
+
+---
+
+## 🖼️ Screenshots *(Coming Soon)*
+
+<!-- Insert screenshots here  -->
+
+---
+
+
+## 📁 How to Run
+
+1. Clone this repo:  
+   `git clone https://github.com/Dom031/fluxoro.git`
+2. Navigate into the project:  
+   `cd fluxoro`
+3. Run the main script:  
+   `python main.py`
+
+*Requires Python 3.8+ and PyQt5 installed.*
+
+---
+
+## 🙏 Acknowledgments
+
+This project reflects the culmination of my learning during university. Special thanks to my supervisor, tutors, and peers for their support throughout this journey.
+
+---
+
