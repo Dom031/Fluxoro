@@ -48,18 +48,6 @@ It reflects a modular, scalable design following the **Model-View-Controller (MV
 | **QSS** | Custom styling for UI components |
 | **GitHub** | Version control and project tracking |
 
----
-
-## 🧩 Project Structure
-fluxoro/
-├── controllers/ # Business logic & flow control
-├── database/ # SQLite schema & connection logic
-├── models/ # Data handling and utilities
-├── reports/ # CSV, Excel, PDF generation
-├── styles/ # QSS files for dark mode and UI styling
-├── ui/ # PyQt5 GUI files and dialogs
-└── main.py # Application entry point
-
 
 ---
 
