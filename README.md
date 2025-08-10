@@ -1,59 +1,35 @@
 # Fluxoro – Automated Sales Management System
 
-**Fluxoro** is a Python-based desktop application built as my final year project for the **BSc (Hons) Computer Science (Software Engineering)** degree at the University of Hertfordshire (achieved First Class Honours). This project showcases my skills in backend development, database integration, and user interface design.
+Fluxoro is a Python-based desktop application built as my final year project for the BSc (Hons) Software Engineering degree at the University of Hertfordshire, where I achieved First Class Honours.
 
-The goal of Fluxoro is to provide a streamlined solution for managing and reporting retail sales data, automating repetitive tasks, and enabling non-technical staff to interact with business data effortlessly.
+The application streamlines retail sales management by automating report generation, providing clear visual dashboards, and making business data accessible to non-technical staff through a user-friendly interface.
 
----
+## 📌 Features
+- Secure Login System with role-based access
+- Dynamic Reporting: export to CSV, Excel, and PDF
+- Interactive Dashboards with bar charts and KPIs
+- Custom PyQt5 UI styled with QSS
+- Local Database (SQLite) for offline storage
+- Real-Time Validation and input feedback
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Setup & Usage](#setup--usage)
-- [Project Structure](#project-structure)
-- [Screenshots](#screenshots)
-- [Planned Improvements](#planned-improvements)
-
----
-
-## 📌 Overview
-
-Fluxoro was developed for the **Software Engineering Project** module and built using Python, PyQt5, and SQLite. It is designed to replace manual sales tracking methods with a clean, user-friendly interface that supports sales entry, reporting, and management.
-
-It reflects a modular, scalable design following the **Model-View-Controller (MVC)** pattern, with built-in export capabilities and error handling.
+## 🛠 Tech Stack
+| Technology | Purpose |
+|------------|---------|
+| Python | Core application logic |
+| PyQt5 | Graphical user interface |
+| SQLite | Local database |
+| Pandas | Data handling and export |
+| QSS | UI styling |
+| GitHub | Version control |
 
 ---
 
-## ✨ Key Features
+## 🖼️ Screenshots
 
-- 🔐 **Secure Login System** – Credential validation with feedback and UI toggles.
-- 📊 **Automated Report Generation** – Export sales reports to **CSV, Excel, and PDF** formats.
-- 🧱 **Modular Codebase** – Clean architecture with reusable UI components.
-- 🖥️ **Custom GUI with PyQt5** – Styled using QSS for a polished, responsive interface.
-- 💾 **SQLite Integration** – Local database for sales storage and retrieval.
-- ❗ **Real-Time Validation** – Error handling and form feedback across the app.
+![Login Screen](Screenshots/Login%20Dark%20mode.png)
+![Manager Dashboard](Screenshots/Landing%20Page.png)
+![Reports Page](Screenshots/Charts.png)
 
----
-
-## 🛠️ Tech Stack
-
-| Technology | Use |
-|------------|-----|
-| **Python** | Core application logic |
-| **PyQt5** | GUI development |
-| **SQLite** | Local database |
-| **Pandas** | Data manipulation and report export |
-| **QSS** | Custom styling for UI components |
-| **GitHub** | Version control and project tracking |
-
-
----
-
-## 🖼️ Screenshots *(Coming Soon)*
-
-<!-- Insert screenshots here  -->
 
 ---
 
@@ -68,12 +44,3 @@ It reflects a modular, scalable design following the **Model-View-Controller (MV
    `python main.py`
 
 *Requires Python 3.8+ and PyQt5 installed.*
-
----
-
-## 🙏 Acknowledgments
-
-This project reflects the culmination of my learning during university. Special thanks to my supervisor, tutors, and peers for their support throughout this journey.
-
----
-
